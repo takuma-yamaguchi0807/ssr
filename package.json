@@ -9,9 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@prisma/client": "^6.19.3",
     "ioredis": "^5.10.1",
     "mysql2": "^3.22.3",
     "next": "15.5.15",
+    "prisma": "^6.19.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "uuid": "^14.0.0"

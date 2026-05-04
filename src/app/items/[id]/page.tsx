@@ -2,13 +2,7 @@ import db from "@/lib/db";
 import redis from "@/lib/redis";
 import { notFound } from "next/navigation";
 
-type Item = {
-  id: number;
-  name: string;
-  description: string;
-};
-
-const CACHE_TTL = 60; // 60秒
+const CACHE_TTL = 60;
 
 export default async function ItemPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -16,21 +10,25 @@ export default async function ItemPage({ params }: { params: Promise<{ id: strin
 
   const cached = await redis.get(cacheKey);
   if (cached) {
-    const item = JSON.parse(cached) as Item;
+    const item = JSON.parse(cached);
     return <ItemDetail item={item} cached />;
   }
 
-  const [rows] = await db.query("SELECT id, name, description FROM items WHERE id = ?", [id]);
-  const items = rows as Item[];
-  if (items.length === 0) notFound();
+  const item = await db.item.findUnique({ where: { id: Number(id) } });
+  if (!item) notFound();
 
-  const item = items[0];
   await redis.set(cacheKey, JSON.stringify(item), "EX", CACHE_TTL);
 
   return <ItemDetail item={item} cached={false} />;
 }
 
-function ItemDetail({ item, cached }: { item: Item; cached: boolean }) {
+function ItemDetail({
+  item,
+  cached,
+}: {
+  item: { id: number; name: string; description: string };
+  cached: boolean;
+}) {
   return (
     <main>
       <h1>{item.name}</h1>

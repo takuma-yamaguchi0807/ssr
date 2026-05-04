@@ -4,7 +4,8 @@
 
 - [x] Next.jsプロジェクトの初期化（依存パッケージのインストール）
 - [x] next.config.ts を standalone モードに設定
-- [x] src/lib/db.ts を実装（mysql2 connectionプールのシングルトン）
+- [x] prisma/schema.prisma を作成（MySQLモデル定義）
+- [x] src/lib/db.ts を実装（Prisma clientのシングルトン）
 - [x] src/lib/redis.ts を実装（ioredis clientのシングルトン）
 - [x] src/lib/session.ts を実装（Cookie↔Redisのセッション読み書き）
 - [x] src/app/page.tsx を実装（アイテム一覧 Server Component）

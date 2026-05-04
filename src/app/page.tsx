@@ -3,16 +3,9 @@ import { getSession } from "@/lib/session";
 import TaskBadge from "@/components/TaskBadge";
 import Link from "next/link";
 
-type Item = {
-  id: number;
-  name: string;
-  description: string;
-};
-
 export default async function HomePage() {
   const session = await getSession();
-  const [rows] = await db.query("SELECT id, name, description FROM items");
-  const items = rows as Item[];
+  const items = await db.item.findMany();
 
   return (
     <main>
