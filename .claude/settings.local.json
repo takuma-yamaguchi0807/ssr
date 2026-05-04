@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(dir C:Usersyamatgitssr *)",
-      "Bash(Get-ChildItem C:\\\\Users\\\\yamat\\\\git\\\\ssr *)"
+      "Bash(Get-ChildItem C:\\\\Users\\\\yamat\\\\git\\\\ssr *)",
+      "Bash(npm install *)"
     ]
   }
 }
