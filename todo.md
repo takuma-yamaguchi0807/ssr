@@ -33,7 +33,7 @@
 
 - [x] GitHub シークレットを登録（AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY）
 - [x] terraform apply でAWSインフラを構築
-- [ ] git push → GitHub Actionsの実行・デプロイ確認
-- [ ] DBマイグレーション手動実行（README.md参照）
-- [ ] http://\<alb_dns_name\>/ でアクセス確認（ALBラウンドロビン・セッション共有）
-- [ ] terraform destroy でAWSリソースを削除
+- [x] git push → GitHub Actionsの実行・デプロイ確認
+- [x] DBマイグレーション手動実行（README.md参照）
+- [x] http://\<alb_dns_name\>/ でアクセス確認（ALBラウンドロビン・セッション共有）
+- [x] terraform destroy でAWSリソースを削除
