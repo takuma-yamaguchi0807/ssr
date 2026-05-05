@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { setSession, destroySession } from "@/lib/session";
 import { cookies } from "next/headers";
 
+function getBaseUrl(req: NextRequest): string {
+  const host = req.headers.get("host") ?? "localhost:8080";
+  const proto = req.headers.get("x-forwarded-proto") ?? "http";
+  return `${proto}://${host}`;
+}
+
 export async function POST(req: NextRequest) {
   const formData = await req.formData();
   const action = formData.get("action");
@@ -11,7 +17,7 @@ export async function POST(req: NextRequest) {
     const sessionId = await setSession({ userId });
     const cookieStore = await cookies();
     cookieStore.set("session_id", sessionId, { httpOnly: true, path: "/" });
-    return NextResponse.redirect(new URL("/", req.url));
+    return NextResponse.redirect(`${getBaseUrl(req)}/`);
   }
 
   return NextResponse.json({ error: "invalid action" }, { status: 400 });
@@ -24,7 +30,7 @@ export async function GET(req: NextRequest) {
     await destroySession();
     const cookieStore = await cookies();
     cookieStore.delete("session_id");
-    return NextResponse.redirect(new URL("/", req.url));
+    return NextResponse.redirect(`${getBaseUrl(req)}/`);
   }
 
   return NextResponse.json({ error: "invalid action" }, { status: 400 });
