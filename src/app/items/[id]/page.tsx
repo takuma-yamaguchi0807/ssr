@@ -1,6 +1,7 @@
 import db from "@/lib/db";
 import redis from "@/lib/redis";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
 const CACHE_TTL = 60;
 
@@ -34,7 +35,7 @@ function ItemDetail({
       <h1>{item.name}</h1>
       <p>{item.description}</p>
       <p>キャッシュ: {cached ? "Redis（キャッシュ）" : "DB（初回取得）"}</p>
-      <a href="/">← 一覧に戻る</a>
+      <Link href="/">← 一覧に戻る</Link>
     </main>
   );
 }
