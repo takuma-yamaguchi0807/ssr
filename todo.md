@@ -17,22 +17,23 @@
 ## インフラ・デプロイ
 
 - [x] Dockerfile を作成（マルチステージビルド、ポート8080）
-- [ ] infra/terraform/main.tf / variables.tf / outputs.tf を作成
-- [ ] infra/terraform/vpc.tf を作成（VPC・サブネット×6・IGW・NAT）
-- [ ] infra/terraform/sg.tf を作成（セキュリティグループ×4）
-- [ ] infra/terraform/alb.tf を作成（ALB・ターゲットグループ・リスナー）
-- [ ] infra/terraform/ecr.tf を作成（ECRリポジトリ）
-- [ ] infra/terraform/ecs.tf を作成（クラスター・タスク定義・サービス）
-- [ ] infra/terraform/rds.tf を作成（RDS MySQL）
-- [ ] infra/terraform/elasticache.tf を作成（Redisクラスター）
-- [ ] infra/terraform/cloudwatch.tf を作成（ロググループ・アラーム）
-- [ ] infra/terraform/ssm.tf を作成（Parameter Store）
+- [x] infra/terraform/main.tf / variables.tf / outputs.tf を作成
+- [x] infra/terraform/vpc.tf を作成（VPC・サブネット×6・IGW・NAT）
+- [x] infra/terraform/sg.tf を作成（セキュリティグループ×4）
+- [x] infra/terraform/alb.tf を作成（ALB・ターゲットグループ・リスナー）
+- [x] infra/terraform/ecr.tf を作成（ECRリポジトリ）
+- [x] infra/terraform/ecs.tf を作成（クラスター・タスク定義・サービス）
+- [x] infra/terraform/rds.tf を作成（RDS MySQL）
+- [x] infra/terraform/elasticache.tf を作成（Redisクラスター）
+- [x] infra/terraform/cloudwatch.tf を作成（ロググループ・アラーム）
+- [x] infra/terraform/ssm.tf を作成（Parameter Store）
 - [x] .github/workflows/deploy.yml を作成（docker build → ECR push → ECS deploy）
 
 ## 動作確認
 
-- [ ] GitHub シークレットを登録（AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY / AWS_REGION）
-- [ ] terraform apply でAWSインフラを構築
+- [x] GitHub シークレットを登録（AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY）
+- [x] terraform apply でAWSインフラを構築
 - [ ] git push → GitHub Actionsの実行・デプロイ確認
+- [ ] DBマイグレーション手動実行（README.md参照）
 - [ ] http://\<alb_dns_name\>/ でアクセス確認（ALBラウンドロビン・セッション共有）
 - [ ] terraform destroy でAWSリソースを削除

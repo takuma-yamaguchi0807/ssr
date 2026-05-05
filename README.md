@@ -86,11 +86,30 @@ ssr/
 ```bash
 cd infra/terraform
 terraform init
-terraform apply
-# 出力: alb_dns_name / ecr_repository_url / rds_endpoint / redis_endpoint
+terraform apply -var="db_password=<任意のパスワード>"
+# 出力: alb_dns_name / ecr_repository_url
 ```
 
-### 2. 以降のデプロイ（GitHub Actions）
+### 2. DBマイグレーション（初回のみ手動実行）
+
+```bash
+SUBNET_ID=$(aws ec2 describe-subnets \
+  --filters "Name=tag:Name,Values=ssr-private-1" \
+  --query "Subnets[0].SubnetId" --output text)
+
+SG_ID=$(aws ec2 describe-security-groups \
+  --filters "Name=group-name,Values=ssr-sg-ecs-task" \
+  --query "SecurityGroups[0].GroupId" --output text)
+
+aws ecs run-task \
+  --cluster ssr-cluster \
+  --task-definition ssr-task \
+  --launch-type FARGATE \
+  --network-configuration "{\"awsvpcConfiguration\":{\"subnets\":[\"$SUBNET_ID\"],\"securityGroups\":[\"$SG_ID\"],\"assignPublicIp\":\"DISABLED\"}}" \
+  --overrides '{"containerOverrides":[{"name":"ssr","command":["npx","prisma","migrate","deploy"]}]}'
+```
+
+### 3. 以降のデプロイ（GitHub Actions）
 
 ```bash
 git push origin main
@@ -112,7 +131,6 @@ terraform destroy
 |---|---|
 | `AWS_ACCESS_KEY_ID` | デプロイ用IAMユーザーキー |
 | `AWS_SECRET_ACCESS_KEY` | 同上 |
-| `AWS_REGION` | `ap-northeast-1` |
 
 ---
 
