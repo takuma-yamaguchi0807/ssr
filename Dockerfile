@@ -11,13 +11,11 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=8080
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-COPY --from=builder --chown=appuser:appgroup /app/.next/standalone ./
-COPY --from=builder --chown=appuser:appgroup /app/.next/static ./.next/static
+COPY --from=builder --chown=appuser:appgroup /app/.next ./.next
+COPY --from=builder --chown=appuser:appgroup /app/node_modules ./node_modules
 COPY --from=builder --chown=appuser:appgroup /app/public ./public
 COPY --from=builder --chown=appuser:appgroup /app/prisma ./prisma
-COPY --from=builder --chown=appuser:appgroup /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
-COPY --from=builder --chown=appuser:appgroup /app/node_modules/prisma ./node_modules/prisma
-COPY --from=builder --chown=appuser:appgroup /app/node_modules/@prisma ./node_modules/@prisma
+COPY --chown=appuser:appgroup package.json ./
 USER appuser
 EXPOSE 8080
-CMD ["node", "server.js"]
+CMD ["node_modules/.bin/next", "start"]
